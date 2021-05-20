@@ -1,0 +1,275 @@
+@import "compass/css3";
+
+//Variables
+$barThickness: 15px;
+$aA: #4faaf8; //Bank Account
+$aB: #0f900f; //Credit Account
+$selected: #e9fbff;
+
+//Jquery UI New Layout
+.ui-datepicker-header {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background: #444;
+  padding: $barThickness;
+  position: relative;
+}
+.ui-datepicker-prev, .ui-datepicker-next {
+  position: absolute;
+  top: $barThickness;
+  cursor: pointer;
+}
+.ui-datepicker-prev {
+  left: $barThickness;
+}
+.ui-datepicker-next {
+  right: $barThickness;
+}
+.ui-datepicker-calendar {
+  display: block;
+  width: 100%;
+  thead {
+    display: none;
+  }
+  tbody, tr, td {
+    display: block;
+    padding: 0;
+    width: 100%;
+  }
+  .ui-datepicker-unselectable {
+    display: none;
+  }
+}
+.ui-state-default {
+  cursor: default;
+}
+
+//Classes
+.past { opacity: 0.3; }
+.trip { color: purple !important; &:before, .day & { background: purple !important } }
+.loan { color: hotpink !important; &:before, .day & { background: hotpink !important } }
+.bill { color: red !important; &:before, .day & { background: red !important } }
+.food { color: #FF6B00 !important; &:before, .day & { background: #FF6B00 !important } }
+.income { color: #00E010 !important; &:before, .day & { background: #00E010  !important } }
+.entertainment { color: navy !important; &:before, .day & { background: navy !important } }
+.rent { color: maroon !important; &:before, .day & { background: maroon !important } }
+.transfer { color: darkgreen !important; &:before, .day & { background: darkgreen !important } }
+.aAtotal { color: $aA !important; }
+.aBtotal { color: $aB !important; }
+.aAtotal em, .aBtotal em { color: #000 !important; }
+
+//Layout
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #fff; font: 22px Helvetica; }
+.container {
+  margin: 0 auto;
+  width: 320px; //iPhone 5 Preview
+  position: relative;
+}
+.dayWrap {
+  list-style: none;
+  color: #666;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  &.pay {
+    background: lighten(green, 60%);
+  }
+}
+.day {
+  padding: 0 ($barThickness * 3.5) 0 0;
+  height: 61px;
+  position: relative;
+  cursor: pointer;
+  border-bottom: 1px #eee solid;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  u {
+    background: #000;
+    display: block;
+    float: left;
+    margin-right: 2px;
+    padding: 0;
+    width: ($barThickness / 2);
+    height: ($barThickness * 4);
+  }
+  &.selected {
+    background: $selected;
+    .date {
+      background: darken($selected, 10%);
+    }
+  }
+}
+.date {
+  font-size: 11px;
+  font-weight: normal;
+  text-align: center;
+  text-decoration: none;
+  color: #444;
+  background: #e9fbff;
+  padding: 13px 13px 13px 12px;
+  display: block;
+  float: left;
+  width: 60px;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  &.pulled {
+    background: #000 !important;
+    color: #fff !important;
+  }
+}
+.items {
+  display: none;
+  background: #fff;
+  cursor: pointer;
+  i {
+    font-style: normal;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: $barThickness $barThickness $barThickness ($barThickness * 1.5);
+    border-bottom: 1px #eee solid;
+    position: relative;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    .aAname, .aBname {
+      font-size: 11px;
+      position: absolute;
+      top: ($barThickness * 2.25);
+      right: $barThickness;
+      z-index: 3;
+    }
+  }
+  i[class^="aA"]:before, i[class^="aB"]:before {
+    content: "";
+    display: block;
+    background: blue;
+    width: ($barThickness / 2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+.priceWrap {
+  background: #fff;
+  padding: 0 0 $barThickness $barThickness;
+  position: absolute;
+  top: ($barThickness / 1.75);
+  right: $barThickness;
+  z-index: 2;
+}
+.cents {
+  font-size: 11px;
+  position: relative;
+  top: -8px;
+}
+.itemName {
+  position: relative;
+  top: -($barThickness / 3);
+}
+.category {
+  font-size: 11px;
+  text-transform: capitalize;
+  position: absolute;
+  top: ($barThickness * 2.25);
+  left: ($barThickness * 1.5);
+}
+.aAname {
+  color: $aA;
+}
+.aBname {
+  color: $aB;
+}
+.aAtotal, .aBtotal {
+  float: right;
+  padding: ($barThickness / 1.5) 0 ($barThickness) ($barThickness / 1.5) !important;
+  margin-left: 1px;
+  border: none;
+  position: relative;
+  .aAname, .aBname {
+    font-size: 11px;
+    padding: 0;
+    position: absolute;
+    top: ($barThickness * 2.5);
+    right: 2px;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+}
+.add, .edit, .delete {
+  text-decoration: none;
+  color: #ddd;
+  display: block;
+  background: #f8f8f8;
+  padding: $barThickness ($barThickness / 0.75);
+}
+.add {
+  opacity: 0;
+  font-size: 21px;
+  text-shadow: lighten(green, 10%) 1px 1px 5px;
+  color: #fff;
+  background: lighten(green, 20%);
+  padding: $barThickness * 1.25;
+  margin: 0;
+  width: 130px;
+  height: ($barThickness * 4);
+  position: absolute;
+  top: 0;
+  right: -130px;
+  z-index: 2;
+  -webkit-backface-visibility: hidden;
+}
+.delete {
+  opacity: 0;
+  text-shadow: darken(red, 20%) 1px 1px 5px;
+  color: #fff;
+  background: red;
+  margin-right: 0;
+  width: 100px;
+  position: absolute;
+  right: -100px;
+  top: 0;
+  z-index: 4;
+}
+.nMonth, .pMonth {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  background: #777;
+  padding: ($barThickness / 2) $barThickness;
+  position: absolute;
+  top: $barThickness / 2;
+  right: $barThickness / 2;
+}
+.pMonth {
+  right: auto;
+  left: ($barThickness / 2);
+}
